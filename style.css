@@ -1,0 +1,872 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(45deg, #2c3e50, #34495e, #2c3e50, #34495e);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    min-height: 100vh;
+    color: white;
+    margin: 0;
+    padding: 10px;
+    overflow-x: hidden;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    text-align: center;
+    max-width: 1024px;
+    width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.header-section {
+    flex-shrink: 0;
+    margin-bottom: 10px;
+}
+
+.controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.bottom-section {
+    flex-shrink: 0;
+    margin-top: 10px;
+}
+
+h1 {
+    color: white;
+    font-size: 2rem;
+    margin: 10px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+}
+
+/* BPMコントロール */
+.bpm-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bpm-control label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ecf0f1;
+}
+
+#bpm-value {
+    color: #e74c3c;
+    font-size: 1.4rem;
+    min-width: 40px;
+    display: inline-block;
+}
+
+.bpm-slider {
+    width: 120px;
+    height: 8px;
+    border-radius: 5px;
+    background: #34495e;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.bpm-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e74c3c;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.bpm-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e74c3c;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* メインコントロール */
+.main-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.control-button {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.control-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.control-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.control-button .button-emoji {
+    font-size: 2rem;
+}
+
+.play-btn {
+    background: linear-gradient(135deg, #27ae60, #229954);
+}
+
+.play-btn.playing {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    animation: playingGlow 2s infinite;
+}
+
+@keyframes playingGlow {
+    0%, 100% { box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); }
+    50% { box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4); }
+}
+
+.stop-btn {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.clear-btn {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+}
+
+.clear-btn:hover {
+    background: linear-gradient(135deg, #bdc3c7, #95a5a6);
+}
+
+/* テンプレート選択 */
+.template-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.template-selector label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ecf0f1;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#template-selector {
+    padding: 8px 10px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+    min-width: 140px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+}
+
+#template-selector:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+#template-selector:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #e74c3c;
+}
+
+#template-selector option {
+    background: #2c3e50;
+    color: white;
+    padding: 5px;
+}
+
+/* シーケンサー */
+.sequencer {
+    position: relative;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+/* 拍子ガイド */
+.timing-guide {
+    margin-bottom: 10px;
+}
+
+.timing-explanation {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.beat-strong, .beat-weak, .beat-off {
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.beat-strong {
+    color: #e74c3c;
+}
+
+.beat-weak {
+    color: #f39c12;
+}
+
+.beat-off {
+    color: #95a5a6;
+}
+
+.step-numbers {
+    display: grid;
+    grid-template-columns: 150px repeat(16, 1fr);
+    gap: 2px;
+    margin-bottom: 8px;
+}
+
+.step-number {
+    text-align: center;
+    font-weight: bold;
+    color: #bdc3c7;
+    font-size: 0.8rem;
+    padding: 3px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.step-number.beat-strong {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.step-number.beat-weak {
+    color: #f39c12;
+}
+
+.step-number.beat-off {
+    color: #95a5a6;
+}
+
+.beat-label {
+    font-size: 0.6rem;
+    margin-top: 2px;
+    opacity: 0.8;
+}
+
+.track {
+    display: grid;
+    grid-template-columns: 150px repeat(16, 1fr);
+    gap: 2px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.track-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.track-label .drum-button {
+    width: 130px;
+    height: 40px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.track-label .drum-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.track-label .drum-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.track-label .drum-button.playing {
+    animation: drumHit 0.2s ease;
+}
+
+@keyframes drumHit {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.hihat .drum-button {
+    background: linear-gradient(135deg, #5352ed, #3742fa);
+}
+
+.snare .drum-button,
+.snare-track .drum-button {
+    background: linear-gradient(135deg, #ffa502, #ff8c00);
+}
+
+.kick .drum-button,
+.kick-track .drum-button {
+    background: linear-gradient(135deg, #ff4757, #ff3838);
+}
+
+.hihat-track .drum-button {
+    background: linear-gradient(135deg, #5352ed, #3742fa);
+}
+
+.track-label .button-emoji {
+    font-size: 1.2rem;
+}
+
+.track-label .button-label {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.steps {
+    display: contents;
+}
+
+.step {
+    width: 100%;
+    height: 45px;
+    border: 2px solid #34495e;
+    border-radius: 8px;
+    background: #2c3e50;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    min-width: 30px;
+}
+
+.step:hover {
+    border-color: #7f8c8d;
+    background: #34495e;
+}
+
+.step.active {
+    background: #e74c3c;
+    border-color: #c0392b;
+    box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+
+.step.active:hover {
+    background: #ec7063;
+    border-color: #e74c3c;
+}
+
+/* 4拍子の強拍を強調 */
+.step:nth-child(1),   /* 1拍目 */
+.step:nth-child(5),   /* 5拍目 */
+.step:nth-child(9),   /* 9拍目 */
+.step:nth-child(13)   /* 13拍目 */ {
+    border-width: 3px;
+}
+
+/* 4拍区切りの視覚的分離 */
+.step:nth-child(4),   /* 4拍目の後 */
+.step:nth-child(8),   /* 8拍目の後 */
+.step:nth-child(12)   /* 12拍目の後 */ {
+    margin-right: 8px;
+    border-right: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 再生位置インジケーター */
+.playhead {
+    position: absolute;
+    top: 0;
+    left: 220px;
+    right: 20px;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.playhead-indicator {
+    position: absolute;
+    top: 0;
+    width: calc((100% - 45px) / 16);
+    height: 100%;
+    background: rgba(46, 204, 113, 0.3);
+    border: 2px solid #2ecc71;
+    border-radius: 8px;
+    transform: translateX(0);
+    transition: transform 0.1s ease;
+    opacity: 0;
+}
+
+.playhead-indicator.playing {
+    opacity: 1;
+}
+
+/* ステータス表示 */
+.status-display {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.status-text {
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: 5px;
+}
+
+.pattern-info {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.current-step {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 3px 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+/* 音色コントロール */
+.sound-controls {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sound-control-row {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.sound-control-panel {
+    flex: 1;
+    min-width: 0;
+}
+
+.panel-header {
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 8px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.control-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.control-compact select {
+    padding: 4px 8px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 0.8rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.control-compact input[type="range"] {
+    height: 4px;
+    border-radius: 2px;
+    background: #34495e;
+    outline: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.control-compact input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #e74c3c;
+    cursor: pointer;
+}
+
+.control-compact input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #e74c3c;
+    cursor: pointer;
+    border: none;
+}
+
+.sound-controls h3 {
+    color: white;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.sound-control-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.sound-control-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 280px;
+}
+
+.sound-control-panel h4 {
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.hihat-control {
+    border-left: 4px solid #5352ed;
+}
+
+.snare-control {
+    border-left: 4px solid #ffa502;
+}
+
+.kick-control {
+    border-left: 4px solid #ff4757;
+}
+
+.control-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 10px;
+}
+
+.control-row label {
+    color: #ecf0f1;
+    font-size: 0.9rem;
+    font-weight: bold;
+    min-width: 50px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.sound-type {
+    flex: 1;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.sound-type option {
+    background: #2c3e50;
+    color: white;
+}
+
+.pitch-slider,
+.volume-slider {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: #34495e;
+    outline: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.pitch-slider::-webkit-slider-thumb,
+.volume-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #e74c3c;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.pitch-slider::-webkit-slider-thumb:hover,
+.volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.pitch-slider::-moz-range-thumb,
+.volume-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #e74c3c;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.pitch-value,
+.volume-value {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    font-weight: bold;
+    min-width: 60px;
+    text-align: right;
+    font-family: 'Courier New', monospace;
+}
+
+.instructions {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px 30px;
+    border-radius: 25px;
+    display: inline-block;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1024px) {
+    .step-numbers,
+    .track {
+        grid-template-columns: 160px repeat(16, 1fr);
+    }
+    
+    .track-label .drum-button {
+        width: 140px;
+        height: 45px;
+        font-size: 0.9rem;
+    }
+    
+    .track-label .button-emoji {
+        font-size: 1.3rem;
+    }
+    
+    .playhead {
+        left: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .step-numbers,
+    .track {
+        grid-template-columns: 120px repeat(16, 1fr);
+        gap: 2px;
+    }
+    
+    .track-label .drum-button {
+        width: 100px;
+        height: 40px;
+        font-size: 0.8rem;
+    }
+    
+    .track-label .button-emoji {
+        font-size: 1.1rem;
+    }
+    
+    .track-label .button-label {
+        font-size: 0.8rem;
+    }
+    
+    .step {
+        height: 40px;
+    }
+    
+    .step-number {
+        font-size: 0.7rem;
+        padding: 3px;
+    }
+    
+    .playhead {
+        left: 140px;
+    }
+    
+    .bpm-slider {
+        width: 150px;
+    }
+    
+    .control-button {
+        width: 80px;
+        height: 60px;
+    }
+    
+    .control-button .button-emoji {
+        font-size: 1.5rem;
+    }
+    
+    .control-button .button-label {
+        font-size: 0.8rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .step-numbers,
+    .track {
+        grid-template-columns: 80px repeat(16, 1fr);
+        gap: 1px;
+    }
+    
+    .track-label .drum-button {
+        width: 70px;
+        height: 35px;
+        font-size: 0.7rem;
+        flex-direction: column;
+        gap: 2px;
+    }
+    
+    .track-label .button-emoji {
+        font-size: 0.9rem;
+    }
+    
+    .track-label .button-label {
+        font-size: 0.6rem;
+    }
+    
+    .step {
+        height: 35px;
+    }
+    
+    .step-number {
+        font-size: 0.6rem;
+        padding: 2px;
+    }
+    
+    .playhead {
+        left: 100px;
+    }
+    
+    .sequencer {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .bpm-control {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .bpm-slider {
+        width: 200px;
+    }
+    
+    .main-controls {
+        gap: 15px;
+    }
+    
+    .pattern-info {
+        gap: 15px;
+    }
+    
+    .sound-control-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .sound-control-panel {
+        max-width: none;
+    }
+    
+    .control-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .control-row label {
+        min-width: auto;
+        text-align: center;
+    }
+    
+    .pitch-value,
+    .volume-value {
+        text-align: center;
+        min-width: auto;
+    }
+}

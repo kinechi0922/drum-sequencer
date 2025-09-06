@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>こどもドラムパッド</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <h1>🎵 ドラムシーケンサー 🎵</h1>
+            
+            <!-- コントロール行 -->
+            <div class="controls-row">
+                <!-- BPMコントロール -->
+                <div class="bpm-control">
+                    <label for="bpm-slider">BPM: <span id="bpm-value">60</span></label>
+                    <input type="range" id="bpm-slider" min="60" max="180" value="60" class="bpm-slider">
+                </div>
+                
+                <!-- テンプレート選択 -->
+                <div class="template-selector">
+                    <label for="template-selector">📋</label>
+                    <select id="template-selector">
+                        <option value="">パターン選択</option>
+                        <option value="clear">クリア</option>
+                        <option value="basic8beat">8ビート基本</option>
+                        <option value="rock8beat">ロック8ビート</option>
+                        <option value="disco">ディスコ</option>
+                        <option value="shuffle">シャッフル</option>
+                        <option value="funk">ファンク</option>
+                    </select>
+                </div>
+                
+                <!-- メイン制御ボタン -->
+                <div class="main-controls">
+                    <button class="control-button play-btn" data-action="play">
+                        <div class="button-emoji">▶️</div>
+                    </button>
+                    <button class="control-button stop-btn" data-action="stop">
+                        <div class="button-emoji">⏹️</div>
+                    </button>
+                    <button class="control-button clear-btn" data-action="clear">
+                        <div class="button-emoji">🗑️</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ステップシーケンサー -->
+        <div class="sequencer">
+            <div class="timing-guide">
+                <div class="timing-explanation">
+                    <span class="beat-strong">●つよい拍</span>
+                    <span class="beat-weak">○よわい拍</span>
+                    <span class="beat-off">+あいだ</span>
+                </div>
+            </div>
+            
+            <div class="step-numbers">
+                <div class="track-label"></div>
+                <div class="step-number beat-strong">1<span class="beat-label">つよ</span></div>
+                <div class="step-number beat-off">+<span class="beat-label">あいだ</span></div>
+                <div class="step-number beat-weak">2<span class="beat-label">よわ</span></div>
+                <div class="step-number beat-off">+<span class="beat-label">あいだ</span></div>
+                <div class="step-number beat-strong">3<span class="beat-label">つよ</span></div>
+                <div class="step-number beat-off">+<span class="beat-label">あいだ</span></div>
+                <div class="step-number beat-weak">4<span class="beat-label">よわ</span></div>
+                <div class="step-number beat-off">+<span class="beat-label">あいだ</span></div>
+                <div class="step-number beat-strong">1<span class="beat-label">つよ</span></div>
+                <div class="step-number beat-off">+<span class="beat-label">あいだ</span></div>
+                <div class="step-number beat-weak">2<span class="beat-label">よわ</span></div>
+                <div class="step-number beat-off">+<span class="beat-label">あいだ</span></div>
+                <div class="step-number beat-strong">3<span class="beat-label">つよ</span></div>
+                <div class="step-number beat-off">+<span class="beat-label">あいだ</span></div>
+                <div class="step-number beat-weak">4<span class="beat-label">よわ</span></div>
+                <div class="step-number beat-off">+<span class="beat-label">あいだ</span></div>
+            </div>
+            
+            <!-- ハイハットトラック -->
+            <div class="track hihat-track">
+                <div class="track-label">
+                    <button class="drum-button hihat" data-sound="hihat">
+                        <div class="button-emoji">✨</div>
+                        <div class="button-label">ハイハット</div>
+                    </button>
+                </div>
+                <div class="steps" data-track="hihat">
+                    <button class="step" data-step="0"></button>
+                    <button class="step" data-step="1"></button>
+                    <button class="step" data-step="2"></button>
+                    <button class="step" data-step="3"></button>
+                    <button class="step" data-step="4"></button>
+                    <button class="step" data-step="5"></button>
+                    <button class="step" data-step="6"></button>
+                    <button class="step" data-step="7"></button>
+                    <button class="step" data-step="8"></button>
+                    <button class="step" data-step="9"></button>
+                    <button class="step" data-step="10"></button>
+                    <button class="step" data-step="11"></button>
+                    <button class="step" data-step="12"></button>
+                    <button class="step" data-step="13"></button>
+                    <button class="step" data-step="14"></button>
+                    <button class="step" data-step="15"></button>
+                </div>
+            </div>
+            
+            <!-- スネアトラック -->
+            <div class="track snare-track">
+                <div class="track-label">
+                    <button class="drum-button snare" data-sound="snare">
+                        <div class="button-emoji">🔥</div>
+                        <div class="button-label">スネア</div>
+                    </button>
+                </div>
+                <div class="steps" data-track="snare">
+                    <button class="step" data-step="0"></button>
+                    <button class="step" data-step="1"></button>
+                    <button class="step" data-step="2"></button>
+                    <button class="step" data-step="3"></button>
+                    <button class="step" data-step="4"></button>
+                    <button class="step" data-step="5"></button>
+                    <button class="step" data-step="6"></button>
+                    <button class="step" data-step="7"></button>
+                    <button class="step" data-step="8"></button>
+                    <button class="step" data-step="9"></button>
+                    <button class="step" data-step="10"></button>
+                    <button class="step" data-step="11"></button>
+                    <button class="step" data-step="12"></button>
+                    <button class="step" data-step="13"></button>
+                    <button class="step" data-step="14"></button>
+                    <button class="step" data-step="15"></button>
+                </div>
+            </div>
+            
+            <!-- キックトラック -->
+            <div class="track kick-track">
+                <div class="track-label">
+                    <button class="drum-button kick" data-sound="kick">
+                        <div class="button-emoji">🥁</div>
+                        <div class="button-label">キック</div>
+                    </button>
+                </div>
+                <div class="steps" data-track="kick">
+                    <button class="step" data-step="0"></button>
+                    <button class="step" data-step="1"></button>
+                    <button class="step" data-step="2"></button>
+                    <button class="step" data-step="3"></button>
+                    <button class="step" data-step="4"></button>
+                    <button class="step" data-step="5"></button>
+                    <button class="step" data-step="6"></button>
+                    <button class="step" data-step="7"></button>
+                    <button class="step" data-step="8"></button>
+                    <button class="step" data-step="9"></button>
+                    <button class="step" data-step="10"></button>
+                    <button class="step" data-step="11"></button>
+                    <button class="step" data-step="12"></button>
+                    <button class="step" data-step="13"></button>
+                    <button class="step" data-step="14"></button>
+                    <button class="step" data-step="15"></button>
+                </div>
+            </div>
+            
+            <!-- 再生位置インジケーター -->
+            <div class="playhead">
+                <div class="playhead-indicator"></div>
+            </div>
+        </div>
+        
+        <div class="bottom-section">
+            <!-- 音色コントロール -->
+            <div class="sound-controls">
+                <div class="sound-control-row">
+                    <!-- ハイハットコントロール -->
+                    <div class="sound-control-panel hihat-control">
+                        <div class="panel-header">✨ ハイハット</div>
+                        <div class="control-compact">
+                            <select class="sound-type" data-track="hihat">
+                                <option value="metallic">メタリック</option>
+                                <option value="sharp">シャープ</option>
+                                <option value="soft">ソフト</option>
+                                <option value="vintage">ヴィンテージ</option>
+                            </select>
+                            <input type="range" class="pitch-slider" data-track="hihat" min="1000" max="12000" value="4000">
+                            <input type="range" class="volume-slider" data-track="hihat" min="0" max="100" value="40">
+                        </div>
+                    </div>
+                    
+                    <!-- スネアコントロール -->
+                    <div class="sound-control-panel snare-control">
+                        <div class="panel-header">🔥 スネア</div>
+                        <div class="control-compact">
+                            <select class="sound-type" data-track="snare">
+                                <option value="classic">クラシック</option>
+                                <option value="punchy">パンチ</option>
+                                <option value="fat">ファット</option>
+                                <option value="electronic">エレクトロ</option>
+                            </select>
+                            <input type="range" class="pitch-slider" data-track="snare" min="500" max="3000" value="1000">
+                            <input type="range" class="volume-slider" data-track="snare" min="0" max="100" value="60">
+                        </div>
+                    </div>
+                    
+                    <!-- キックコントロール -->
+                    <div class="sound-control-panel kick-control">
+                        <div class="panel-header">🥁 キック</div>
+                        <div class="control-compact">
+                            <select class="sound-type" data-track="kick">
+                                <option value="deep">ディープ</option>
+                                <option value="punchy">パンチ</option>
+                                <option value="boomy">ブーミー</option>
+                                <option value="tight">タイト</option>
+                            </select>
+                            <input type="range" class="pitch-slider" data-track="kick" min="30" max="150" value="60">
+                            <input type="range" class="volume-slider" data-track="kick" min="0" max="100" value="80">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="status-display">
+                <div class="status-text">ステップをタッチしてパターンを作ろう！</div>
+                <div class="pattern-info">
+                    <span class="current-step">Step: --</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
